@@ -1,8 +1,29 @@
-  apiVersion: cloud.google.com/v1
-  kind: BackendConfig
-  metadata:
-    name: fintech-backendconfig
-    namespace: fintech-app
-  spec:
-    securityPolicy:
-      name: fintech-armor-policy
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: fintech-backendconfig
+  namespace: fintech-app
+spec:
+  securityPolicy:
+    name: fintech-armor-policy
+
+  timeoutSec: 30
+
+  connectionDraining:
+    drainingTimeoutSec: 60
+
+  healthCheck:
+    checkIntervalSec: 10
+    timeoutSec: 5
+    healthyThreshold: 2
+    unhealthyThreshold: 3
+    type: HTTP
+    requestPath: /
+    port: 80
+
+  logging:
+    enable: true
+    sampleRate: 1.0
+
+  cdn:
+    enabled: false
