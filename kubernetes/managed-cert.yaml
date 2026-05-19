@@ -1,0 +1,8 @@
+    apiVersion: networking.gke.io/v1
+    kind: ManagedCertificate
+    metadata:
+      name: fintech-managed-cert
+      namespace: fintech-app
+    spec:
+      domains:
+        - app.wealthbridgezone.com
