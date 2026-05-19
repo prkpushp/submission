@@ -1,0 +1,14 @@
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: nginx-service
+    namespace: fintech-app   
+    annotations:
+      cloud.google.com/backend-config: '{"default": "fintech-backendconfig"}' 
+  spec:
+    type: ClusterIP 
+    selector:
+      app: nginx-app
+    ports:
+    - port: 80
+      targetPort: 80
