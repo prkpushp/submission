@@ -114,8 +114,22 @@
           --expression "evaluatePreconfiguredWaf('xss-stable')" \
           --action deny-403 \
           --description "Block XSS attacks"
+   ## Rate limit
+         gcloud compute security-policies rules create 4000 \
+            --security-policy=fintech-armor-policy \
+            --action=throttle \
+            --src-ip-ranges="*" \
+            --rate-limit-threshold-count=1000 \
+            --rate-limit-threshold-interval-sec=60 \
+            --conform-action=allow \
+            --exceed-action=deny-429 \
+            --enforce-on-key=IP
+   ## L7 ddos Defence
+         gcloud compute security-policies update fintech-armor-policy \
+            --enable-layer7-ddos-defense
 
-  <img width="1245" height="623" alt="image" src="https://github.com/user-attachments/assets/4fb1b3c6-d226-4bd2-b98b-0dabcabc7ddc" />
+  <img width="1162" height="615" alt="image" src="https://github.com/user-attachments/assets/814bbd07-b13b-4c79-afa0-4bdcc994063a" />
+
 
   ## Reserve Static IP for ELB:
         gcloud compute addresses create fintech-ingress-ip --global
